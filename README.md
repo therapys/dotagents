@@ -69,6 +69,7 @@ Build and review code:
 - `frontend`
 - `flesch-kincaid-proofreader`
 - `update-agents-md`
+- `compress-skills` — shrink `SKILL.md` files to use less context while preserving every trigger, guardrail, and capability
 - `thermo-nuclear-code-quality-review`
 - `competitive-ads-extractor`
 - `posthog` — query data, LLM costs, and MCP tool quality via the PostHog `exec` connector; paired with a scoped `PreToolUse` hook (`claude/hooks/posthog-skill-nudge.mjs`, see `claude/setup.md`)
