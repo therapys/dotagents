@@ -72,6 +72,7 @@ Build and review code:
 - `thermo-nuclear-code-quality-review`
 - `competitive-ads-extractor`
 - `posthog` — query data, LLM costs, and MCP tool quality via the PostHog `exec` connector; paired with a scoped `PreToolUse` hook (`claude/hooks/posthog-skill-nudge.mjs`, see `claude/setup.md`)
+- `gog` — safely automate Gmail, Calendar, Drive, Docs, Sheets, and other Google Workspace services through `gogcli`
 
 Learn with pi:
 
