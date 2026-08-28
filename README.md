@@ -71,6 +71,7 @@ Build and review code:
 - `update-agents-md`
 - `thermo-nuclear-code-quality-review`
 - `competitive-ads-extractor`
+- `posthog` — query data, LLM costs, and MCP tool quality via the PostHog `exec` connector; paired with a scoped `PreToolUse` hook (`claude/hooks/posthog-skill-nudge.mjs`, see `claude/setup.md`)
 
 Learn with pi:
 
