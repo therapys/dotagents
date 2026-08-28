@@ -1,0 +1,12 @@
+{
+  "name": "dotagents",
+  "version": "0.1.0",
+  "description": "Shared skills/hooks/extensions for Claude Code + pi, with an install/uninstall/update CLI",
+  "bin": {
+    "dotagents": "bin/dotagents.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

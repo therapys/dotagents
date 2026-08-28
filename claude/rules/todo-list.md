@@ -1,0 +1,1 @@
+Any multi-step request needs a todo list — no exceptions. Skip only for questions or single quick actions. Order is free; mark each item in_progress when you start it and completed when done, one at a time.

@@ -1,0 +1,21 @@
+# OS junk
+.DS_Store
+
+# Node deps (pi extensions like visual-tools build their own)
+node_modules/
+
+# Logs / local state
+*.log
+.memory/
+
+# Never commit secrets or per-machine runtime state.
+# (These live in ~/.claude and ~/.pi/agent directly and are not symlinked here,
+#  but guard against accidental copies.)
+auth.json
+*auth*.json
+models-store.json
+sessions/
+
+# Private, project-specific skills — kept local, never published
+skills/verify-tracking/
+skills/sheet-design-system/
