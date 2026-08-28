@@ -1,18 +1,8 @@
 # Baseline Comparison Templates
 
-## Contents
-
-- Window selection
-- Builder query template (`signoz_execute_builder_query`)
-- Computing the delta
-- Surfacing the comparison
-- When the baseline is invalid
-- Logs / traces drill-down (Tier 3)
-
-Tier 2 of the investigation pairs each neighbor-signal query against a
-fire-window query and a baseline-window query, then computes a delta.
-This file shows how to format those calls cleanly via the SigNoz MCP
-tools.
+Tier 2 pairs each neighbor-signal query against a fire-window and a
+baseline-window query, then computes a delta. Below: how to format those
+calls via the SigNoz MCP tools.
 
 ## Window selection
 
@@ -32,12 +22,10 @@ relative description ("24h before fire").
 
 ## Builder query template (`signoz_execute_builder_query`)
 
-For each neighbor signal, run the same builder query twice, once per
-window. The only thing that changes is `start` / `end`.
-
-This is a complete tool-argument example for trace p99 latency. Replace the
-Unix-millisecond `start` / `end`, treat `stepInterval: 60` as the
-window-appropriate seconds placeholder, and adapt the `spec` using the MCP
+Run the same builder query twice, once per window; only `start`/`end`
+change. Complete tool-argument example for trace p99 latency — replace the
+Unix-millisecond `start`/`end`, treat `stepInterval: 60` as the
+window-appropriate seconds placeholder, and adapt the `spec` per the MCP
 guide for the chosen signal. Keep the outer `query`, `formatOptions`, and
 `variables` fields.
 
@@ -80,18 +68,17 @@ guide for the chosen signal. Keep the outer `query`, `formatOptions`, and
 }
 ```
 
-Keep the same positive limit and Query Builder v5 `order` in the fire and
-baseline requests. For time series, the limit ranks groups over the whole
-window, so a short-lived local spike can be outside the top N. Dashboard
-`orderBy` is not valid in this execution payload. For a formula alert, first
-replay the stored component limits exactly. If any formula input is below
-10000, run a second fire/baseline comparison with that input raised to 10000;
-base limits are applied before formula evaluation, so independent top-N inputs
-can hide the group that should have fired. Find inputs by inspecting every
-formula expression, including formulas with `disabled: true`, and following
-formula references to all `builder_query` leaves. This dependency walk changes
-only the comparison bounds; it does not prove deterministic formula-to-formula
-evaluation order.
+Keep the same positive limit and Query Builder v5 `order` in both fire and
+baseline requests. For time series the limit ranks groups over the whole
+window, so a short-lived local spike can fall outside the top N. Dashboard
+`orderBy` is invalid in this execution payload. For a formula alert, first
+replay the stored component limits exactly; if any formula input is below
+10000, run a second fire/baseline comparison with that input raised to 10000
+(base limits apply before formula evaluation, so independent top-N inputs can
+hide the group that should have fired). Find inputs by inspecting every
+formula expression, including `disabled: true` formulas, and following
+references to all `builder_query` leaves. This walk changes only the
+comparison bounds; it does not prove deterministic formula-to-formula order.
 
 ## Computing the delta
 
@@ -121,9 +108,8 @@ In the Tier 2 output for each signal, present:
          baseline 14:32-14:40 UTC (24h prior)
 ```
 
-The agent should embed these in the "Likely causes - Evidence"
-sections of the final structured output. The query line lets the user
-re-run the comparison without rebuilding the parameters.
+Embed these in the "Likely causes → Evidence" sections of the final output;
+the query line lets the user re-run the comparison without rebuilding params.
 
 ## When the baseline is invalid
 

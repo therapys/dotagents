@@ -29,7 +29,7 @@ One flow from working changes to an open PR. Delegates the commit *message* to t
 
 Trigger: "on each of the repos", "all repos except infra", "push to git on each repo".
 
-- Target set = the sibling git repos under a shared parent dir (the repos alongside the current one).
+- Target set = the sibling git repos under a shared parent dir.
 - Honor any excludes the user names (e.g. "except infra").
 - Run steps 1–5 per repo that has changes. Skip clean repos and report them as skipped.
 - Summarize at the end: one line per repo → branch + PR URL (or "no changes").

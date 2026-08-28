@@ -1,6 +1,6 @@
 # PostHog query recipes
 
-Ready-to-run HogQL for the three jobs. Run each via `exec` → `call execute-sql {"query":"…"}` (or the typed `query-*` tool where noted). Every query sets a time range on purpose — without one it scans the whole `events` table. Adjust the `INTERVAL`/`date_from` to the user's window.
+Ready-to-run HogQL for the three jobs. Run via `exec` → `call execute-sql {"query":"…"}` (or the typed `query-*` tool where noted). Every query sets a time range on purpose — without one it scans the whole `events` table. Adjust `INTERVAL`/`date_from` to the user's window.
 
 ---
 

@@ -6,26 +6,26 @@ compatibility: Requires Node.js 18 or newer. Syllable estimates are designed for
 
 # Flesch–Kincaid Proofreader
 
-Use the bundled script for measurement and sentence triage. Use the language model only for the semantic work that a deterministic tool cannot do: preserving meaning, voice, and technical accuracy while rewriting.
+Use the bundled script for measurement and sentence triage. Use the language model only for the semantic work a deterministic tool cannot do: preserving meaning, voice, and technical accuracy while rewriting.
 
 ## Workflow
 
-1. Choose the target grade. Use the user's target when given; otherwise use grade 8.
-2. Run the deterministic analyzer before editing:
+1. Choose the target grade. Use the user's target when given; otherwise grade 8.
+2. Run the analyzer before editing:
 
    ```bash
    node scripts/readability.mjs --target 8 path/to/README.md
    ```
 
-3. Review the script's difficult sentences in descending grade order. Start with sentences that are both long and far above the target. The listed complex words are candidates, not automatic errors.
+3. Review difficult sentences in descending grade order. Start with sentences that are both long and far above target. Listed complex words are candidates, not automatic errors.
 4. Rewrite only where useful. Prefer:
    - one main idea per sentence;
    - familiar, precise words over longer synonyms;
    - active, concrete constructions;
    - bullets for genuine lists;
    - keeping required technical terms and explaining them once.
-5. Run the same command again. Continue until the copy meets the target or further simplification would harm accuracy, voice, or usefulness.
-6. Report the before/after grade and any intentional exceptions. Never claim that a passing score proves the copy is clear or correct.
+5. Re-run the same command. Continue until the copy meets the target or further simplification would harm accuracy, voice, or usefulness.
+6. Report the before/after grade and any intentional exceptions. Never claim a passing score proves the copy is clear or correct.
 
 Do not estimate the grade yourself, count words or syllables manually, or ask the model to rank every sentence. The script owns those deterministic steps.
 

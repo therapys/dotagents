@@ -19,11 +19,7 @@ Create a git commit for the current changes using a concise Conventional Commits
 - Do NOT include breaking-change markers or footers.
 - Do NOT add sign-offs (no `Signed-off-by`).
 - Only commit; do NOT push.
-- If it is unclear whether a file should be included, ask the user which files to commit.
-- Treat any caller-provided arguments as additional commit guidance. Common patterns:
-  - Freeform instructions should influence scope, summary, and body.
-  - File paths or globs should limit which files to commit. If files are specified, only stage/commit those unless the user explicitly asks otherwise.
-  - If arguments combine files and instructions, honor both.
+- Treat caller-provided arguments as additional guidance: freeform instructions shape scope/summary/body; file paths or globs limit which files to commit (stage/commit only those unless the user explicitly asks otherwise); if arguments combine both, honor both.
 
 ## Steps
 

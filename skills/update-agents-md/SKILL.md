@@ -7,10 +7,6 @@ description: "Generate or refresh a repo's AGENTS.md (the source-of-truth agent 
 
 This skill follows a two-file convention: **`AGENTS.md` is the single source of truth**, and **`CLAUDE.md` is a one-line pointer** containing exactly `@AGENTS.md`. pi reads `AGENTS.md` directly; Claude Code reads `CLAUDE.md`, which imports it. Maintain AGENTS.md — never duplicate content across the two files.
 
-## Trigger
-
-"update the claude.md / agents.md", "analyze this project and update the context file", "write an AGENTS.md", or a stack/layout change that leaves the current file stale.
-
 ## Steps
 
 1. **Ground yourself in the repo — don't invent:**

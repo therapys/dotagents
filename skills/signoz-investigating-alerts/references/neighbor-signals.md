@@ -1,19 +1,13 @@
 # Neighbor Signals Lookup
 
-For each resource type the alert is scoped to, this table lists the
-neighbor signals to pull during Tier 2 (fire-window vs baseline
-comparison). Pull every signal in the row; rank by absolute deviation
-from baseline.
-
-The MCP server's "always prefer resource attributes" guideline applies
-to all of these queries: use the same resource-attribute filter as
-the alert itself.
+Neighbor signals to pull in Tier 2 (fire-window vs baseline) per resource
+type the alert is scoped to. Pull every signal in the matched row; rank by
+absolute deviation from baseline. Apply the MCP "always prefer resource
+attributes" guideline — use the same resource-attribute filter as the alert.
 
 ## Service-level scope (`service.name = X`)
 
-The alert filters or groups by a service. Neighbor signals describe
-the service's health from the perspective of its callers and its
-runtime.
+Health from the perspective of the service's callers and runtime.
 
 | Signal | Source | Aggregation | Why it matters |
 |---|---|---|---|
@@ -28,8 +22,7 @@ runtime.
 
 ## Host / VM scope (`host.name = X`)
 
-The alert is on a single host or set of hosts. Neighbor signals are
-infrastructure-level.
+Infrastructure-level signals for a single host or host set.
 
 | Signal | Source | Aggregation | Why it matters |
 |---|---|---|---|
@@ -42,7 +35,7 @@ infrastructure-level.
 
 ## K8s namespace / pod scope
 
-The alert is scoped to a k8s namespace, deployment, or pod set.
+Alert scoped to a k8s namespace, deployment, or pod set.
 
 | Signal | Source | Aggregation | Why it matters |
 |---|---|---|---|
@@ -55,8 +48,8 @@ The alert is scoped to a k8s namespace, deployment, or pod set.
 
 ## Generic (no resource scope identified)
 
-If the alert has no resource filter (e.g., a global error-log alert
-without groupBy), Tier 2 is weaker. Pull:
+If the alert has no resource filter (e.g. a global error-log alert without
+groupBy), Tier 2 is weaker. Pull:
 
 | Signal | Source | Aggregation |
 |---|---|---|
