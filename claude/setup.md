@@ -23,12 +23,20 @@ Marketplace: `claude-plugins-official` → github `anthropics/claude-plugins-off
 ```json
 "hooks": {
   "UserPromptSubmit": [
-    { "hooks": [ { "type": "command", "command": "node ~/.blume/hooks/inject-rules.mjs" } ] }
+    { "hooks": [ { "type": "command", "command": "node ~/.config/dotagents/claude/hooks/inject-rules.mjs" } ] }
+  ],
+  "PreToolUse": [
+    {
+      "matcher": "^mcp__claude_ai_PostHog__exec$",
+      "hooks": [ { "type": "command", "command": "node ~/.config/dotagents/claude/hooks/posthog-skill-nudge.mjs" } ]
+    }
   ]
 }
 ```
 
-`inject-rules.mjs` is managed by the Blume tool (`~/.blume`); the copy in `claude/hooks/` is a versioned reference. The portable rule set in `claude/rules/` covers task tracking, deterministic work, safe system changes, verification, clarifying questions, public artifacts, and display.dev previews. The live setting still points at `~/.blume`, so rules must also exist in `~/.blume/rules/` to be active. Keep that directory in sync, or repoint the hook to this repo's copy if you drop Blume.
+`inject-rules.mjs` loads the portable rule set directly from `claude/rules/`. It covers task tracking, deterministic work, safe system changes, verification, clarifying questions, public artifacts, and display.dev previews. Because Claude Code runs the versioned hook from this repo, rule changes take effect without a separate sync step.
+
+`posthog-skill-nudge.mjs` is a `PreToolUse` hook scoped to the PostHog `exec` connector. The first time that tool is used in a session it injects a one-line pointer to the `posthog` skill (`additionalContext` only — it never sets `permissionDecision`, so the tool's normal allow/ask flow is untouched), then stays silent for the rest of the session. Zero cost on non-PostHog work — that's why it's a scoped `PreToolUse` hook rather than an always-on injected rule. It pairs with the `posthog` skill's own description-based auto-trigger as a belt-and-suspenders guarantee.
 
 ## Bootstrap on a new machine
 
