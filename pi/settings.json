@@ -3,5 +3,6 @@
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-8",
   "defaultThinkingLevel": "medium",
-  "theme": "dark"
+  "theme": "dark",
+  "packages": ["npm:pi-context-tools"]
 }
