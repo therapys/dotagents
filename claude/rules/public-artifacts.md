@@ -1,0 +1,1 @@
+Keep artifacts intended for public or shared reuse portable. Do not bake in company names, private endpoints, machine-specific paths, credentials, internal infrastructure, or one project's conventions. Put private customization in local ignored files or documented configuration points. Before publishing, search both the tracked tree and git history for private content.

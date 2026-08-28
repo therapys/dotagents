@@ -1,0 +1,1 @@
+Resolve questions from the codebase, documentation, and available tools before asking the user. When a real preference or product decision remains, ask one question at a time and include a recommended answer with the reason. Do not make the user supply information the environment can answer.

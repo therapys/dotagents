@@ -28,7 +28,7 @@ Marketplace: `claude-plugins-official` → github `anthropics/claude-plugins-off
 }
 ```
 
-`inject-rules.mjs` is managed by the Blume tool (`~/.blume`); the copy in `claude/hooks/` is a versioned reference. The rule it injects (`claude/rules/todo-list.md`) is the "every multi-step request needs a todo list" directive. The live setting still points at `~/.blume` so Blume updates don't break — repoint it to this repo's copy only if you drop Blume.
+`inject-rules.mjs` is managed by the Blume tool (`~/.blume`); the copy in `claude/hooks/` is a versioned reference. The portable rule set in `claude/rules/` covers task tracking, deterministic work, safe system changes, verification, clarifying questions, public artifacts, and display.dev previews. The live setting still points at `~/.blume`, so rules must also exist in `~/.blume/rules/` to be active. Keep that directory in sync, or repoint the hook to this repo's copy if you drop Blume.
 
 ## Bootstrap on a new machine
 
