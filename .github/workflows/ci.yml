@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      # No install step: this repo has zero runtime dependencies by design.
+      - name: Validate skills
+        run: npm run validate
+      - name: Run tests
+        run: npm test
+      - name: CLI smoke test
+        run: |
+          node bin/dotagents.mjs help
+          node bin/dotagents.mjs status
+
+  guard:
+    name: secret guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Generic, provider-agnostic secret patterns only — nothing project-specific,
+      # so this file stays portable if the repo is forked.
+      - name: Scan for committed secrets
+        run: |
+          set -euo pipefail
+          patterns='-----BEGIN (RSA|OPENSSH|EC|DSA|PGP) PRIVATE KEY-----|AKIA[0-9A-Z]{16}|xox[baprs]-[0-9A-Za-z-]+|gh[pousr]_[0-9A-Za-z]{20,}|sk-[A-Za-z0-9]{20,}'
+          if git grep -nIE -e "$patterns" -- . ':!*.lock' ':!*-lock.json'; then
+            echo "::error::Potential secret found in the tree (see matches above)."
+            exit 1
+          fi
+          echo "No obvious secrets found."

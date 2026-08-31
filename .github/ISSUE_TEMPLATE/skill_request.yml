@@ -1,0 +1,37 @@
+name: Propose a skill
+description: Suggest a new shared skill (or a feature for an existing one).
+labels: [skill, enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Skills are the reusable unit here. A good proposal makes the trigger and the payoff obvious.
+  - type: input
+    id: name
+    attributes:
+      label: Proposed name
+      description: kebab-case, matches the folder it would live in.
+      placeholder: "changelog-writer"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What it does & when it should trigger
+      description: The one-liner that would go in the frontmatter `description`. Include the words a user would type.
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Why it's worth sharing
+      description: What does this save people from doing by hand? Is any of it deterministic (script + tests)?
+    validations:
+      required: false
+  - type: checkboxes
+    id: portable
+    attributes:
+      label: Portability
+      options:
+        - label: This skill is generic — no company names, secrets, or private endpoints.
+          required: true

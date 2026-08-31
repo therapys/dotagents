@@ -1,0 +1,40 @@
+name: Bug report
+description: Something in a skill, hook, or the installer isn't working.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please do **not** include secrets, tokens, or private data.
+  - type: input
+    id: area
+    attributes:
+      label: Area
+      description: Which part? e.g. a skill name, the installer, a hook.
+      placeholder: "skill: posthog / bin/dotagents.mjs / inject-rules hook"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run `npx github:therapys/dotagents install`
+        2. …
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: Tool + version, OS, and Node version (`node --version`).
+      placeholder: "Claude Code 1.x / pi 0.x, macOS 15, Node 22"
+    validations:
+      required: false

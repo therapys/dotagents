@@ -2,11 +2,46 @@
   "name": "dotagents",
   "version": "0.1.0",
   "description": "Shared skills/hooks/extensions for Claude Code + pi, with an install/uninstall/update CLI",
+  "keywords": [
+    "claude-code",
+    "claude",
+    "pi",
+    "ai-agents",
+    "skills",
+    "dotfiles",
+    "agent-config",
+    "developer-tools",
+    "hooks",
+    "mcp"
+  ],
+  "homepage": "https://github.com/therapys/dotagents#readme",
+  "bugs": {
+    "url": "https://github.com/therapys/dotagents/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/therapys/dotagents.git"
+  },
+  "author": "Karl (@therapys)",
+  "license": "MIT",
   "bin": {
     "dotagents": "bin/dotagents.mjs"
+  },
+  "scripts": {
+    "test": "node --test",
+    "validate": "node scripts/validate-skills.mjs",
+    "check": "npm run validate && npm test"
   },
   "engines": {
     "node": ">=18"
   },
-  "license": "MIT"
+  "files": [
+    "bin/",
+    "skills/",
+    "pi/",
+    "claude/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ]
 }
