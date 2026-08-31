@@ -2,8 +2,6 @@
 
 # dotagents
 
-**One set of skills for [Claude Code](https://github.com/anthropics/claude-code) and [pi](https://github.com/earendil-works/pi). Edit once — both tools update.**
-
 [![CI](https://github.com/therapys/dotagents/actions/workflows/ci.yml/badge.svg)](https://github.com/therapys/dotagents/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](package.json)
