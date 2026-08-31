@@ -41,6 +41,7 @@ frontmatter description.
 - `get-pr-comments` — fetch and summarize review comments on the active PR
 - `thermo-nuclear-code-quality-review` — strict maintainability audit
 - `frontend` — design production-ready UIs with aesthetic direction
+- `extract-design-system` — reverse-engineer a project's design into a reusable design skill
 - `flesch-kincaid-proofreader` — score and simplify prose to a target reading grade
 - `update-agents-md` — generate or refresh a repo's `AGENTS.md`
 - `compress-skills` — shrink a `SKILL.md`'s context cost with no loss of behavior
