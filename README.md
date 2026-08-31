@@ -37,6 +37,7 @@ frontmatter description.
 
 - `commit` — write a Conventional Commit for staged changes
 - `ship` — dirty tree → branch, commit, push, open PR
+- `autonomous-maintainer` — set up a product, then loop on verified, logged improvements
 - `fix-ci` — find failing PR checks, read logs, apply fixes
 - `get-pr-comments` — fetch and summarize review comments on the active PR
 - `thermo-nuclear-code-quality-review` — strict maintainability audit
