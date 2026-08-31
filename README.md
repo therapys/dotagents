@@ -1,37 +1,14 @@
-<div align="center">
-
 # dotagents
 
-**One set of skills for [Claude Code](https://github.com/anthropics/claude-code) and [pi](https://github.com/earendil-works/pi). Edit once — both tools update.**
+My collection of skills for [Claude Code](https://github.com/anthropics/claude-code) and
+[pi](https://github.com/earendil-works/pi), tuned to load light and trigger reliably. Both
+tools read the same `SKILL.md` format, so skills live in one place and symlinks share them
+with both. A single edit takes effect in both tools at once.
 
 [![CI](https://github.com/therapys/dotagents/actions/workflows/ci.yml/badge.svg)](https://github.com/therapys/dotagents/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](package.json)
-[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-```bash
-npx github:therapys/dotagents install
-```
-
-</div>
-
----
-
-Shared settings for my AI coding tools. Both Claude Code and pi read the same `SKILL.md`
-format, so skills live in **one place** and symlinks share them with both tools. Files used
-by only one tool live next to the shared ones.
-
-## Why
-
-- **One format, two tools.** A skill is a folder with a `SKILL.md`. Symlinks point the live
-  tool directories at this repo, so a single edit takes effect in Claude Code *and* pi at once.
-- **Zero dependencies, reversible install.** The installer is one dependency-free Node file.
-  It backs up anything it would replace to `*.pre-dotagents` and restores it on `uninstall` —
-  it never clobbers your existing config.
-- **Batteries included.** Skills for shipping code, reviewing PRs, wrangling analytics, and
-  learning — plus Claude Code hooks, pi extensions, and subagents.
-
-## Install (npx)
+## Install
 
 ```bash
 npx github:therapys/dotagents install     # clone + symlink into ~/.claude and ~/.pi
@@ -40,57 +17,42 @@ npx github:therapys/dotagents uninstall   # remove symlinks (restore backups); -
 npx github:therapys/dotagents status      # show repo + symlink state
 ```
 
-`install` does the following:
+`install` clones the repo to `~/.config/dotagents`, backs up any existing `skills`,
+`extensions`, and `agents` dirs to `*.pre-dotagents`, symlinks the live tool paths to this
+repo, and runs `npm install` for each extension that has a `package.json`. It's safe to run
+more than once. `uninstall` removes the links and restores the backups.
 
-- Clones the repo to `~/.config/dotagents`.
-- Lets you pick a new path with `[dir]`, `--dir <path>`, or `DOTAGENTS_DIR`. The default path is `$XDG_CONFIG_HOME/dotagents`.
-- Saves old `skills`, `extensions`, and `agents` dirs as `*.pre-dotagents`.
-- Links the live tool paths to this repo.
-- Runs `npm install` for each extension with a `package.json`.
+Override the path with `[dir]`, `--dir <path>`, or `DOTAGENTS_DIR` (default
+`$XDG_CONFIG_HOME/dotagents`). Use `--skip-npm` to skip npm installs, and `DOTAGENTS_REPO`
+to install from a fork.
 
-You can run `install` more than once. Use `--skip-npm` to skip npm installs. Set `DOTAGENTS_REPO` to use a fork.
-
-`uninstall` removes the links and puts each `*.pre-dotagents` backup back in place. Use `--purge` to also delete the clone.
-
-> **Note:** `visual-tools` installs Puppeteer and mermaid-cli. They use about 460 MB in the gitignored `node_modules` dir. Puppeteer gets Chromium through a `postinstall` script. If npm blocks install scripts with `allowScripts`, it will not get the browser. Run `npm install-scripts approve puppeteer` in that dir to allow it. You can also set `PUPPETEER_EXECUTABLE_PATH` to a system copy of Chrome.
+> **Note:** `visual-tools` installs Puppeteer and mermaid-cli (~460 MB in the gitignored
+> `node_modules`). Puppeteer fetches Chromium via a `postinstall` script; if npm blocks it,
+> run `npm install-scripts approve puppeteer` in that dir or set `PUPPETEER_EXECUTABLE_PATH`.
 
 ## Skills
 
 Each skill is a folder under `skills/` with a `SKILL.md`. Both tools load it by its
-frontmatter, so the description is the trigger.
+frontmatter description.
 
-**Build & review code**
+- `commit` — write a Conventional Commit for staged changes
+- `ship` — dirty tree → branch, commit, push, open PR
+- `fix-ci` — find failing PR checks, read logs, apply fixes
+- `get-pr-comments` — fetch and summarize review comments on the active PR
+- `thermo-nuclear-code-quality-review` — strict maintainability audit
+- `frontend` — design production-ready UIs with aesthetic direction
+- `flesch-kincaid-proofreader` — score and simplify prose to a target reading grade
+- `update-agents-md` — generate or refresh a repo's `AGENTS.md`
+- `compress-skills` — shrink a `SKILL.md`'s context cost with no loss of behavior
+- `posthog` — query analytics, LLM spend, and MCP tool quality via PostHog `exec`
+- `gog` — automate Gmail, Calendar, Drive, Docs, and Sheets via the `gog` CLI
+- `signoz-investigating-alerts` — root-cause a fired SigNoz alert from neighbor signals
+- `competitive-ads-extractor` — pull and analyze competitors' ads
+- `teach` — explanations that lock in, using two teaching principles
+- `visualize` — add a diagram that renders inline in a pi lesson log
 
-| Skill | What it does |
-|---|---|
-| `commit` | Write a clean Conventional Commit for your staged changes. |
-| `ship` | Dirty tree → branch, commit, push, and open the PR in one shot. |
-| `fix-ci` | Find failing PR checks, read the logs, apply focused fixes. |
-| `get-pr-comments` | Fetch and summarize review comments on the active PR. |
-| `thermo-nuclear-code-quality-review` | A brutally strict maintainability audit — abstractions, giant files, spaghetti conditions. |
-| `frontend` | Design distinctive, production-ready UIs with real aesthetic direction. |
-| `flesch-kincaid-proofreader` | Score and simplify prose to a target reading grade (deterministic script + tests). |
-| `update-agents-md` | Generate or refresh a repo's `AGENTS.md` and its `CLAUDE.md` pointer. |
-| `compress-skills` | Shrink a `SKILL.md`'s context cost with **zero** loss of behavior. |
-
-**Data, ops & growth**
-
-| Skill | What it does |
-|---|---|
-| `posthog` | Query analytics, LLM spend, and MCP tool quality via the PostHog `exec` connector. Paired with a scoped `PreToolUse` hook. |
-| `gog` | Safely automate Gmail, Calendar, Drive, Docs, and Sheets through the `gog` CLI. |
-| `signoz-investigating-alerts` | Root-cause a fired SigNoz alert by correlating neighbor signals, traces, and logs. |
-| `competitive-ads-extractor` | Pull and analyze competitors' ads to sharpen your own campaigns. |
-
-**Learn with pi**
-
-| Skill | What it does |
-|---|---|
-| `teach` | Explanations that actually lock in, using two proven teaching principles. |
-| `visualize` | Add a correct, minimal diagram that renders inline in your lesson log. |
-
-The learning skills come from the [`learn`](https://github.com/amosblomqvist/learn) system.
-They use the pi extensions and agents shown below.
+`teach` and `visualize` come from the [`learn`](https://github.com/amosblomqvist/learn)
+system and use the pi extensions and agents below.
 
 ## Layout
 
@@ -109,7 +71,7 @@ claude/
 
 ## How it's wired (symlinks)
 
-The live tool dirs point to this repo. A skill edit takes effect in both tools at once:
+The live tool dirs point to this repo, so a skill edit takes effect in both tools at once:
 
 | Live path | → symlink target |
 |---|---|
@@ -118,45 +80,21 @@ The live tool dirs point to this repo. A skill edit takes effect in both tools a
 | `~/.pi/agent/extensions` | `dotagents/pi/extensions` |
 | `~/.pi/agent/agents` | `dotagents/pi/agents` |
 
-Some files are not linked because they are local, hold secrets, or may be changed by an app:
+Some files aren't linked because they're local, hold secrets, or get changed by an app:
+`settings.json` for both tools, pi's `auth.json` / `models-store.json` / `sessions/`, and
+Claude Code's plugin cache. This repo keeps pi's `settings.json` only as a base copy. See
+[`claude/setup.md`](claude/setup.md) for plugins and hooks that aren't symlinked.
 
-- `settings.json` for both tools.
-- pi's `auth.json`, `models-store.json`, and `sessions/`.
-- Claude Code's plugin cache.
+## Adding a skill
 
-This repo keeps pi's `settings.json` only as a base copy.
-
-## Bootstrap on a new machine
-
-```bash
-git clone https://github.com/therapys/dotagents.git ~/.config/dotagents
-
-# Claude Code — share skills
-rm -rf ~/.claude/skills && ln -s ~/.config/dotagents/skills ~/.claude/skills
-
-# pi — share skills, extensions, agents
-rm -rf ~/.pi/agent/skills      && ln -s ~/.config/dotagents/skills         ~/.pi/agent/skills
-rm -rf ~/.pi/agent/extensions  && ln -s ~/.config/dotagents/pi/extensions  ~/.pi/agent/extensions
-rm -rf ~/.pi/agent/agents      && ln -s ~/.config/dotagents/pi/agents      ~/.pi/agent/agents
-
-# pi visual-tools extension needs its deps built
-( cd ~/.config/dotagents/pi/extensions/visual-tools && npm install )
-```
-
-See [`claude/setup.md`](claude/setup.md) for plugins/hooks that aren't symlinked.
-
-## Contributing
-
-New skills are the most useful thing you can add. See [CONTRIBUTING.md](CONTRIBUTING.md) for
-the layout and the frontmatter contract, then run:
+Drop a folder under `skills/` with a `SKILL.md` — YAML frontmatter (`name` matching the
+folder, plus a `description` that says what it does and when to use it), then the guide.
+Validate before committing:
 
 ```bash
-npm run check   # validate every skill's frontmatter + run tests (same as CI)
+npm run check   # validate every skill's frontmatter + run tests
 ```
-
-Please keep skills portable — no company names, secrets, or machine-specific paths. See
-[SECURITY.md](SECURITY.md).
 
 ## License
 
-[MIT](LICENSE) — if this saves you time, a ⭐ helps others find it.
+[MIT](LICENSE)
